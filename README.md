@@ -1,49 +1,108 @@
-These guidelines build on Apple's existing [Coding Guidelines for Cocoa](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html).
-Unless explicitly contradicted below, assume that all of Apple's guidelines apply as well.
+These guidelines build on Apple's documentation:
 
-## Whitespace
+* [The Objective-C Programming Language](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html)
+* [Cocoa Fundamentals Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html)
+* [Coding Guidelines for Cocoa](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/CodingGuidelines.html)
+* [iOS App Programming Guide](http://developer.apple.com/library/ios/#documentation/iphone/conceptual/iphoneosprogrammingguide/Introduction/Introduction.html)
 
- * Tabs, not spaces.
- * End files with a newline.
- * Make liberal use of vertical whitespace to divide code into logical chunks.
+Unless explicitly contradicted below, assume that all of Apple's guidelines in the above documents also apply.
 
-## Documentation and Organization
 
- * All method declarations should be documented.
- * Comments should be hard-wrapped at 80 characters.
- * Comments should be [Tomdoc](http://tomdoc.org/)-style.
- * Document whether object parameters allow `nil` as a value.
- * Use `#pragma mark`s to categorize methods into functional groupings and protocol implementations, following this general structure:
+## Language
+
+US English should be used.
+
+**Preferred:**
+```objc
+UIColor *myColor = UIColor.whiteColor;
+```
+
+**Not Preferred:**
+```objc
+UIColor *myColour = UIColor.whiteColor;
+```
+
+## Code Organization
+
+ * Use `#pragma - mark`s to categorize methods into functional groupings and protocol implementations, following this general structure:
 
 ```objc
-#pragma mark Properties
+#pragma mark NSObject
 
-@dynamic someProperty;
+- (void)dealloc {}
 
-- (void)setCustomProperty:(id)value {}
-
-#pragma mark Lifecycle
+#pragma mark - CBNClassName
 
 + (instancetype)objectWithThing:(id)thing {}
 - (instancetype)init {}
 
-#pragma mark Drawing
-
-- (void)drawRect:(CGRect) {}
-
-#pragma mark Another functional grouping
-
-#pragma mark GHSuperclass
+#pragma mark - CBNSuperclass
 
 - (void)someOverriddenMethod {}
 
-#pragma mark NSCopying
+#pragma mark - Accessors
 
-- (id)copyWithZone:(NSZone *)zone {}
+- (void)setCustomProperty:(id)value {}
 
-#pragma mark NSObject
+#pragma mark - CBNProtocolName
 
-- (NSString *)description {}
+#pragma mark - Public
+
+#pragma mark - Private
+
+```
+
+## Whitespace
+
+* Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
+* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
+
+**Preferred:**
+```objc
+if (user.isHappy) {
+  //Do something
+} else {
+  //Do something else
+}
+```
+
+**Not Preferred:**
+```objc
+if (user.isHappy)
+{
+    //Do something
+}
+else {
+    //Do something else
+}
+```
+
+* There should be exactly one blank line between methods to aid in visual clarity and organization. Whitespace within methods should separate functionality, but often there should probably be new methods.
+* If required, `@synthesize` and `@dynamic` should each be declared on new lines in the implementation.
+* Colon-aligning method invocation should often be avoided.  There are cases where a method signature may have >= 3 colons and colon-aligning makes the code more readable. Please do **NOT** however colon align methods containing blocks because Xcode's indenting makes it illegible.
+
+**Preferred:**
+
+```objc
+// blocks are easily readable
+[UIView animateWithDuration:1.0 animations:^{
+  // something
+} completion:^(BOOL finished) {
+  // something
+}];
+```
+
+**Not Preferred:**
+
+```objc
+// colon-aligning makes the block indentation hard to read
+[UIView animateWithDuration:1.0
+                 animations:^{
+                     // something
+                 }
+                 completion:^(BOOL finished) {
+                     // something
+                 }];
 ```
 
 ## Declarations
@@ -66,15 +125,11 @@ Unless explicitly contradicted below, assume that all of Apple's guidelines appl
  * C function declarations should have no space before the opening parenthesis, and should be namespaced just like a class.
 
 ```objc
-void GHAwesomeFunction(BOOL hasSomeArgs);
+void CBNAwesomeFunction(BOOL hasSomeArgs);
 ```
 
  * Constructors should generally return [`instancetype`](http://clang.llvm.org/docs/LanguageExtensions.html#related-result-types) rather than `id`.
- * Prefer C99 struct initialiser syntax to helper functions (such as `CGRectMake()`).
 
-```objc
-  CGRect rect = { .origin.x = 3.0, .origin.y = 12.0, .size.width = 15.0, .size.height = 80.0 };
-   ```
 
 ## Expressions
 
@@ -124,12 +179,6 @@ if (something == nil) {
 }
 ```
 
-## Exceptions and Error Handling
-
- * Don't use exceptions for flow control.
- * Use exceptions only to indicate programmer error.
- * To indicate errors, use an `NSError **` argument or send an error on a [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa) signal.
-
 ## Blocks
 
  * Blocks should have a space between their return type and name.
@@ -150,13 +199,13 @@ id (^blockName2)(id) = ^ id (id args) {
 ## Literals
 
  * Avoid making numbers a specific type unless necessary (for example, prefer `5` to `5.0`, and `5.3` to `5.3f`).
- * The contents of array and dictionary literals should have a space on both sides.
+ * The contents of array and dictionary literals should have no space on either side.
  * Dictionary literals should have no space between the key and the colon, and a single space between colon and value.
 
 ``` objc
-NSArray *theStuff = @[ @1, @2, @3 ];
+NSArray *theStuff = @[@1, @2, @3];
 
-NSDictionary *keyedStuff = @{ GHDidCreateStyleGuide: @YES };
+NSDictionary *keyedStuff = @{GHDidCreateStyleGuide: @YES};
 ```
 
  * Longer or more complex literals should be split over multiple lines (optionally with a terminating comma):
@@ -182,3 +231,122 @@ NSDictionary *keyedStuff = @{
  * Categories should be named for the sort of functionality they provide. Don't create umbrella categories.
  * Category methods should always be prefixed.
  * If you need to expose private methods for subclasses or unit testing, create a class extension named `Class+Private`.
+
+
+## Constants
+
+Constants are preferred over in-line string literals or numbers, as they allow for easy reproduction of commonly used variables and can be quickly changed without the need for find and replace. Constants should be declared as `static` constants and not `#define`s unless explicitly being used as a macro.
+
+**Preferred:**
+
+```objc
+static NSString * const RWTAboutViewControllerCompanyName = @"RayWenderlich.com";
+
+static CGFloat const RWTImageThumbnailHeight = 50.0;
+```
+
+**Not Preferred:**
+
+```objc
+#define CompanyName @"RayWenderlich.com"
+
+#define thumbnailHeight 2
+```
+
+
+## CGRect Functions
+
+When accessing the `x`, `y`, `width`, or `height` of a `CGRect`, always use the [`CGGeometry` functions](http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html) instead of direct struct member access. From Apple's `CGGeometry` reference:
+
+> All functions described in this reference that take CGRect data structures as inputs implicitly standardize those rectangles before calculating their results. For this reason, your applications should avoid directly reading and writing the data stored in the CGRect data structure. Instead, use the functions described here to manipulate rectangles and to retrieve their characteristics.
+
+**Preferred:**
+
+```objc
+CGRect frame = self.view.frame;
+
+CGFloat x = CGRectGetMinX(frame);
+CGFloat y = CGRectGetMinY(frame);
+CGFloat width = CGRectGetWidth(frame);
+CGFloat height = CGRectGetHeight(frame);
+CGRect frame = CGRectMake(0.0, 0.0, width, height);
+```
+
+**Not Preferred:**
+
+```objc
+CGRect frame = self.view.frame;
+
+CGFloat x = frame.origin.x;
+CGFloat y = frame.origin.y;
+CGFloat width = frame.size.width;
+CGFloat height = frame.size.height;
+CGRect frame = (CGRect){ .origin = CGPointZero, .size = frame.size };
+```
+
+## Golden Path
+
+When coding with conditionals, the left hand margin of the code should be the "golden" or "happy" path.  That is, don't nest `if` statements.  Multiple return statements are OK.
+
+**Preferred:**
+
+```objc
+- (void)someMethod {
+  if (![someOther boolValue]) {
+	return;
+  }
+
+  //Do something important
+}
+```
+
+**Not Preferred:**
+
+```objc
+- (void)someMethod {
+  if ([someOther boolValue]) {
+    //Do something important
+  }
+}
+```
+
+## Error handling
+
+When methods return an error parameter by reference, switch on the returned value, not the error variable.
+
+**Preferred:**
+```objc
+NSError *error;
+if (![self trySomethingWithError:&error]) {
+  // Handle Error
+}
+```
+
+**Not Preferred:**
+```objc
+NSError *error;
+[self trySomethingWithError:&error];
+if (error) {
+  // Handle Error
+}
+```
+
+Some of Apple’s APIs write garbage values to the error parameter (if non-NULL) in successful cases, so switching on the error can cause false negatives (and subsequently crash).
+
+
+## Singletons
+
+Singleton objects should be used sparingly. Use a thread-safe pattern for creating their shared instance.
+```objc
++ (instancetype)sharedInstance {
+  static id sharedInstance = nil;
+
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sharedInstance = [[self alloc] init];
+  });
+
+  return sharedInstance;
+}
+```
+This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
