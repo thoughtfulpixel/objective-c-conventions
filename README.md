@@ -44,7 +44,7 @@ UIColor *myColour = UIColor.whiteColor;
 
 - (void)setCustomProperty:(id)value {}
 
-#pragma mark - CBNProtocolName
+#pragma mark - CBNProtocol
 
 #pragma mark - Public
 
@@ -52,10 +52,14 @@ UIColor *myColour = UIColor.whiteColor;
 
 ```
 
+## Naming
+
+* The three letter prefix `CBN` should always be used for class names and constants, including Core Data entity names.
+
 ## Whitespace
 
 * Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
-* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
+* Control flow braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 
 **Preferred:**
 ```objc
@@ -74,6 +78,23 @@ if (user.isHappy)
 }
 else {
     //Do something else
+}
+```
+
+* Method braces always open and close on a new line.
+
+**Preferred:**
+```objc
+- (void)someMethod
+{
+    //Do something
+}
+```
+
+**Not Preferred:**
+```objc
+- (void)someMethod {
+    //Do something
 }
 ```
 
@@ -118,8 +139,8 @@ else {
  * Don't put a space between an object type and the protocol it conforms to.
  
 ```objc
-@property (attributes) id<Protocol> object;
-@property (nonatomic, strong) NSObject<Protocol> *object;
+@property (attributes) id<CBNProtocol> object;
+@property (nonatomic, strong) NSObject<CBNProtocol> *object;
 ```
  
  * C function declarations should have no space before the opening parenthesis, and should be namespaced just like a class.
