@@ -54,7 +54,7 @@ UIColor *myColour = UIColor.whiteColor;
 
 ## Naming
 
-* The three letter prefix `CBN` should always be used for class names and constants, including Core Data entity names.
+* Use the three letter prefix `CBN` for class names and constants, including Core Data entity names.
 
 ## Whitespace
 
@@ -149,7 +149,7 @@ else {
 void CBNAwesomeFunction(BOOL hasSomeArgs);
 ```
 
- * Constructors should generally return [`instancetype`](http://clang.llvm.org/docs/LanguageExtensions.html#related-result-types) rather than `id`.
+ * Constructors should return [`instancetype`](http://clang.llvm.org/docs/LanguageExtensions.html#related-result-types) rather than `id`.
 
 
 ## Expressions
@@ -261,15 +261,15 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 **Preferred:**
 
 ```objc
-static NSString * const RWTAboutViewControllerCompanyName = @"RayWenderlich.com";
+static NSString * const CBNAboutViewControllerCompanyName = @"caarbon.com";
 
-static CGFloat const RWTImageThumbnailHeight = 50.0;
+static CGFloat const CBNImageThumbnailHeight = 50.0;
 ```
 
 **Not Preferred:**
 
 ```objc
-#define CompanyName @"RayWenderlich.com"
+#define CompanyName @"caarbon.com"
 
 #define thumbnailHeight 2
 ```
@@ -312,7 +312,8 @@ When coding with conditionals, the left hand margin of the code should be the "g
 **Preferred:**
 
 ```objc
-- (void)someMethod {
+- (void)someMethod
+{
   if (![someOther boolValue]) {
 	return;
   }
@@ -324,7 +325,8 @@ When coding with conditionals, the left hand margin of the code should be the "g
 **Not Preferred:**
 
 ```objc
-- (void)someMethod {
+- (void)someMethod
+{
   if ([someOther boolValue]) {
     //Do something important
   }
