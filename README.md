@@ -361,7 +361,8 @@ Some of Apple’s APIs write garbage values to the error parameter (if non-NULL)
 
 Singleton objects should be used sparingly. Use a thread-safe pattern for creating their shared instance.
 ```objc
-+ (instancetype)sharedInstance {
++ (instancetype)sharedInstance
+{
   static id sharedInstance = nil;
 
   static dispatch_once_t onceToken;
