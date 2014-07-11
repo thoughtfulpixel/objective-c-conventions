@@ -1,4 +1,4 @@
-These guidelines build on Apple's documentation:
+These conventions build on the following Apple documentation:
 
 * [The Objective-C Programming Language](http://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/ObjectiveC/Introduction/introObjectiveC.html)
 * [Cocoa Fundamentals Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html)
@@ -350,3 +350,8 @@ Singleton objects should be used sparingly. Use a thread-safe pattern for creati
 }
 ```
 This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
+
+
+## Acknowledgements
+
+Inspired by [GitHub](https://github.com/github/objective-c-conventions),  [RayWenderlich.com](https://github.com/raywenderlich/objective-c-style-guide) and [Mattt Thompson](https://github.com/mattt/)'s Obj-C code style.
