@@ -44,7 +44,7 @@ UIColor *myColour = UIColor.whiteColor;
 
 - (void)setCustomProperty:(id)value {}
 
-#pragma mark - CBNProtocolName
+#pragma mark - CBNProtocol
 
 #pragma mark - Public
 
@@ -52,10 +52,14 @@ UIColor *myColour = UIColor.whiteColor;
 
 ```
 
+## Naming
+
+* Use the three letter prefix `CBN` for class names and constants, including Core Data entity names.
+
 ## Whitespace
 
 * Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
-* Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
+* Control flow braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 
 **Preferred:**
 ```objc
@@ -74,6 +78,23 @@ if (user.isHappy)
 }
 else {
     //Do something else
+}
+```
+
+* Method braces always open and close on a new line.
+
+**Preferred:**
+```objc
+- (void)someMethod
+{
+    //Do something
+}
+```
+
+**Not Preferred:**
+```objc
+- (void)someMethod {
+    //Do something
 }
 ```
 
@@ -118,8 +139,8 @@ else {
  * Don't put a space between an object type and the protocol it conforms to.
  
 ```objc
-@property (attributes) id<Protocol> object;
-@property (nonatomic, strong) NSObject<Protocol> *object;
+@property (attributes) id<CBNProtocol> object;
+@property (nonatomic, strong) NSObject<CBNProtocol> *object;
 ```
  
  * C function declarations should have no space before the opening parenthesis, and should be namespaced just like a class.
@@ -128,7 +149,7 @@ else {
 void CBNAwesomeFunction(BOOL hasSomeArgs);
 ```
 
- * Constructors should generally return [`instancetype`](http://clang.llvm.org/docs/LanguageExtensions.html#related-result-types) rather than `id`.
+ * Constructors should return [`instancetype`](http://clang.llvm.org/docs/LanguageExtensions.html#related-result-types) rather than `id`.
 
 
 ## Expressions
@@ -205,7 +226,7 @@ id (^blockName2)(id) = ^ id (id args) {
 ``` objc
 NSArray *theStuff = @[@1, @2, @3];
 
-NSDictionary *keyedStuff = @{GHDidCreateStyleGuide: @YES};
+NSDictionary *keyedStuff = @{CBNDidCreateStyleGuide: @YES};
 ```
 
  * Longer or more complex literals should be split over multiple lines (optionally with a terminating comma):
@@ -240,15 +261,15 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 **Preferred:**
 
 ```objc
-static NSString * const RWTAboutViewControllerCompanyName = @"RayWenderlich.com";
+static NSString * const CBNAboutViewControllerCompanyName = @"caarbon.com";
 
-static CGFloat const RWTImageThumbnailHeight = 50.0;
+static CGFloat const CBNImageThumbnailHeight = 50.0;
 ```
 
 **Not Preferred:**
 
 ```objc
-#define CompanyName @"RayWenderlich.com"
+#define CompanyName @"caarbon.com"
 
 #define thumbnailHeight 2
 ```
@@ -291,7 +312,8 @@ When coding with conditionals, the left hand margin of the code should be the "g
 **Preferred:**
 
 ```objc
-- (void)someMethod {
+- (void)someMethod
+{
   if (![someOther boolValue]) {
 	return;
   }
@@ -303,7 +325,8 @@ When coding with conditionals, the left hand margin of the code should be the "g
 **Not Preferred:**
 
 ```objc
-- (void)someMethod {
+- (void)someMethod
+{
   if ([someOther boolValue]) {
     //Do something important
   }
@@ -338,7 +361,8 @@ Some of Apple’s APIs write garbage values to the error parameter (if non-NULL)
 
 Singleton objects should be used sparingly. Use a thread-safe pattern for creating their shared instance.
 ```objc
-+ (instancetype)sharedInstance {
++ (instancetype)sharedInstance
+{
   static id sharedInstance = nil;
 
   static dispatch_once_t onceToken;
