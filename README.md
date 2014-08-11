@@ -54,7 +54,7 @@ UIColor *myColour = UIColor.whiteColor;
 
 ## Naming
 
-* Use the three letter prefix `CBN` for class names and constants, including Core Data entity names.
+* Use a three letter prefix (for example, `CBN`) for class names and constants, including Core Data entity names.
 
 ## Whitespace
 
