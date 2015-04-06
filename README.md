@@ -525,15 +525,11 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 
 Don't duplicate code.
 
-Identify the common elements in the several functions and either refactor them into subroutines, or reconsider the intent of the functions and refactor the functions themselves.
-
-## Import, not include
-
-Prefer the forward declaration, `@class`, over `#import` in header files. Where possible, use `#import` rather than `#include`.
+Rather, identify the common elements in the several functions and either refactor them into subroutines, or reconsider the intent of the functions and refactor the functions themselves.
 
 ## Minimize dependencies
 
-Minimize and normalize `#include` and `#import` usage.
+Minimize and normalize `#include` and `#import` usage. Prefer the forward declaration, `@class`, over `#import` in header files. Where possible, use `#import` rather than `#include`.
 
 Every time you start to type #import or #include, stop and consider why you're adding an additional dependency to this file. Must this class have a dependency on the other? Why must it? Have you reversed the dependency tree? Are they co-dependent? Why? Should they both be dependent on a third class instead? How will introducing such a dependency impact future maintenance and re-use?
 
