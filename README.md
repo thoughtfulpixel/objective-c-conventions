@@ -342,6 +342,19 @@ static CGFloat const JAYImageThumbnailHeight = 50.0;
 #define thumbnailHeight 50
 ```
 
+Where a constant is required across more than one implementation (e.g. `NSNotification` names or keys for the note's `userInfo` dictionary), declare them `extern`.
+
+**Preferred:**
+```objc
+// JAYSomeClassThatPostsNSNotifications.h
+extern NSString * const JAYMyClassInformativeNoficationName;
+extern NSString * const JAYMyClassInformativeNoficationKeyForSomeInfo;
+
+// JAYSomeClassThatPostsNSNotifications.m
+NSString * const JAYMyClassInformativeNoficationName = @"JAYMyClassInformativeNoficationName";
+NSString * const JAYMyClassInformativeNoficationKeyForSomeInfo = @"JAYMyClassInformativeNoficationKeyForSomeInfo";
+```
+
 ## Literals
 
 Avoid making numbers a specific type unless necessary.
