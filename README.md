@@ -161,6 +161,27 @@ Colon-aligning method invocation should often be avoided.  There are cases where
                  }];
 ```
 
+## Data Types
+Prefer Foundation data types when interacting with Apple APIs and when creating custom APIs.
+
+**Preferred:**
+```objc
+// BOOL, NSInteger, NSUInteger, CGFloat, NSNumber, NSDate, NSTimeInterval, NSString
+@property (nonatomic, assign) NSUInteger *frameSize;
+```
+
+**Not Preferred:**
+```objc
+@property (nonatomic, assign) int *frameSize;
+@property (nonatomic, assign) uint8_t *span;
+```
+
+Internally, classes can use C primitives like `int` or `float`.
+For integers, use `int` unless there is a compelling reason not to.
+
+
+Only use fixed width primitives like `uint8_t` when dealing with hardware interfaces or data structures for over-the-wire communications.
+
 ## Declarations
 
 Never declare an ivar unless you need to change its type from its declared property.
