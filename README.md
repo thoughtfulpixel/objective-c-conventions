@@ -534,6 +534,24 @@ When you decide to use them, use the thread-safe pattern for creating.
 ```
 This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.blogspot.com/2011/04/singletons-your-doing-them-wrong.html).
 
+## Imports
+
+If there is more than one import statement, group the statements [together](http://ashfurrow.com/blog/structuring-modern-objective-c). Commenting each group is optional.
+
+Note: For modules use the [@import](http://clang.llvm.org/docs/Modules.html#using-modules) syntax.
+
+```objc
+// Frameworks
+@import QuartzCore;
+
+// Models
+#import "JAYUser.h"
+
+// Views
+#import "JAYButton.h"
+#import "JAYUserView.h"
+```
+
 ## Copying versus refactoring
 
 Don't duplicate code.
