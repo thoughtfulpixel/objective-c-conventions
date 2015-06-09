@@ -541,8 +541,7 @@ Shared instances should be used vary sparingly and with great thought.
 When you decide to use them, use the thread-safe pattern for creating.
 
 ```objc
-+ (instancetype)sharedInstance
-{
++ (instancetype)sharedInstance {
   static id sharedInstance = nil;
 
   static dispatch_once_t onceToken;
