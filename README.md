@@ -11,18 +11,19 @@ Unless explicitly contradicted below, assume that all of Apple's guidelines in t
 
 Languages permitted in Xcode projects:
 * Objective C
+* Swift 2
 * C99
 * Bash shell scripts
 * Python (build scripting only)
 
-We'll avoid Swift until both the language and tools have reached a level of maturity. Don't introduce other languages without an overwhelming need and before discussing & and agreeing with the rest of the team.
+Don't introduce other languages without an overwhelming need and before discussing & and agreeing with the rest of the team.
 
-Incorporate external dependencies carefully. Consider the following:
-* is it easy to integrate, i.e. can it be built/ dropped in as a fat framework?
-* is it 64-bit compliant?
-* if it's open source - is it widely used and well written (would we want to fork/ support it ourselves)?
+Incorporate external dependencies carefully. They must be:
+* easy to integrate (i.e. can it be built/ dropped in as a fat framework?)
+* 64-bit compliant
+* if open source, widely used and well written (i.e. would we want to support it ourselves)?
 
-Prefer reducing dependencies over relying on a tool a-la-Cocoapods or git submodules. If you feel we need one, discuss with the rest of the team before incorporating.
+Prefer reducing dependencies over relying on Cocoapods or git submodules. If you feel we need one, discuss with the rest of the team before incorporating.
 
 ## Abstractions
 
@@ -30,7 +31,7 @@ POSIX is our platform abstraction layer for C code and  Cocoa and UIKit are our 
 
 Do not create definitions like `STATIC static;`, or `INT32 int32_t;`. Please remove as you find them
 
-Prefer class extension and delegation over inheritance. For more pattern goodness, see Apple's [Cocoa Encyclopedia](https://developer.apple.com/library/mac/documentation/General/Conceptual/CocoaEncyclopedia/Introduction/Introduction.html).
+Prefer class extension and protocols delegation over inheritance. For more patterns, see Apple's [Cocoa Encyclopedia](https://developer.apple.com/library/mac/documentation/General/Conceptual/CocoaEncyclopedia/Introduction/Introduction.html).
 
 ## Language
 
